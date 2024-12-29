@@ -69,6 +69,23 @@ def get_slot_table():
         print(f"Error fetching slot table: {e}")
         return None
 
+def get_available_slot_price_from_col(day_num, row):
+    row_data = {}
+    
+    row_data['time'] = row.find_all('td')[0].text
+    row_data['is_available'] = True if row.find_all('td')[day_num].text else False
+    
+    # Extract price and left elements
+    price_div = row.find_all('td')[day_num].find('div', class_='slot-item available')
+    if price_div:
+        row_data['price'] = price_div.find('p', class_='price').text.strip()
+        row_data['left'] = price_div.find('p', class_='left').text.strip()
+    else:
+        row_data['price'] = "N/A"
+        row_data['left'] = "N/A"
+
+    return row_data
+
 def get_slot_data_from_table(table):
     table_html = table.get_attribute('outerHTML')
     soup = BeautifulSoup(table_html, 'html.parser')
@@ -76,36 +93,42 @@ def get_slot_data_from_table(table):
     table_data = []
     days = []
     row_num = 1
+    day1 = []
+    day2= []
+    day3 = []
+    day4 = []
 
     for row in soup.find('tbody').find_all('tr'):
         if row_num == 1:
             days = [day.text for day in row.find_all('td')]
             print(f"Days: {days}")
         else:
-            row_data = {}
-            row_data['time'] = row.find_all('td')[0].text
-            row_data['is_slot_exist'] = True if row.find_all('td')[1].text else False
-            
-            # Extract price and left elements
-            price_div = row.find_all('td')[1].find('div', class_='slot-item available')
-            if price_div:
-                row_data['price'] = price_div.find('p', class_='price').text.strip()
-                row_data['left'] = price_div.find('p', class_='left').text.strip()
-            else:
-                row_data['price'] = "N/A"
-                row_data['left'] = "N/A"
-            
-            # Append the row data to table_data
-            table_data.append(row_data)
-            print(f"{row_num} -  {row_data}")
-
+            day1.append(get_available_slot_price_from_col(1, row))
+            day2.append(get_available_slot_price_from_col(2, row))
+            day3.append(get_available_slot_price_from_col(3, row))
+            day4.append(get_available_slot_price_from_col(4, row))
         row_num += 1
+
+    table_data.append({
+        "slot_date": days[1],
+        "slots": day1
+    })
+    table_data.append({
+        "slot_date": days[2],
+        "slots": day2
+    })
+    table_data.append({
+        "slot_date": days[3],
+        "slots": day3
+    })
+    table_data.append({
+        "slot_date": days[4],
+        "slots": day4
+    })
 
     # Convert the table data to JSON format
     table_json = json.dumps(table_data, indent=4)
-    print(table_json)
-   
-
+    return table_json
 
 
 # Iterating over Venues (Opening Venue Pages)
@@ -119,10 +142,9 @@ for venue in venues:
         venue["court_count"] = get_number_of_courts(venue)
     slot_table = get_slot_table()    
     if slot_table:
-        get_slot_data_from_table(slot_table)
+        slots_data = get_slot_data_from_table(slot_table)
         # print(slot_table)
     break   
-
 
 
 
