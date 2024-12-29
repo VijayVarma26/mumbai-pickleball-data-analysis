@@ -84,16 +84,18 @@ def get_slot_data_from_table(table):
         else:
             row_data = {}
             row_data['time'] = row.find_all('td')[0].text
-            row_data['is_slot_exist'] = True if row.find_all('td')[1].text else False
+            row_data['court'] = row.find_all('td')[1].text if row.find_all('td')[1].text else "Slot Unavailable"
             
             # Extract price and left elements
-            price_div = row.find_all('td')[1].find('div', class_='slot-item available')
+            price_div = row.find_all('td')[2].find('div', class_='slot-item available')
             if price_div:
                 row_data['price'] = price_div.find('p', class_='price').text.strip()
                 row_data['left'] = price_div.find('p', class_='left').text.strip()
             else:
                 row_data['price'] = "N/A"
                 row_data['left'] = "N/A"
+            
+            row_data['action'] = row.find_all('td')[3].text.strip()
             
             # Append the row data to table_data
             table_data.append(row_data)

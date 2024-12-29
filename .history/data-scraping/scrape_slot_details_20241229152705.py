@@ -70,71 +70,49 @@ def get_slot_table():
         return None
 
 def get_slot_data_from_table(table):
-    table_html = table.get_attribute('outerHTML')
-    soup = BeautifulSoup(table_html, 'html.parser')
-
+    soup = BeautifulSoup(table, 'html.parser')
+    print(soup.prettify())
     table_data = []
-    days = []
-    row_num = 1
-
-    for row in soup.find('tbody').find_all('tr'):
-        if row_num == 1:
-            days = [day.text for day in row.find_all('td')]
-            print(f"Days: {days}")
-        else:
-            row_data = {}
-            row_data['time'] = row.find_all('td')[0].text
-            row_data['is_slot_exist'] = True if row.find_all('td')[1].text else False
-            
-            # Extract price and left elements
-            price_div = row.find_all('td')[1].find('div', class_='slot-item available')
-            if price_div:
-                row_data['price'] = price_div.find('p', class_='price').text.strip()
-                row_data['left'] = price_div.find('p', class_='left').text.strip()
-            else:
-                row_data['price'] = "N/A"
-                row_data['left'] = "N/A"
-            
-            # Append the row data to table_data
-            table_data.append(row_data)
-            print(f"{row_num} -  {row_data}")
-
-        row_num += 1
+    # Iterate over rows in the table body
+    for row in table.find('tbody').find_all('tr'):
+        # Extract all cells in the row
+        cells = row.find_all('td')
+        print(cells)    
+        # Store data in a dictionary
+        # row_data = {
+        #     'Date': cells[0].text.strip(),
+        #     'Day': cells[1].text.strip(),
+        #     'Time': cells[2].text.strip(),
+        #     'Status': cells[3].text.strip(),
+        #     'Price': cells[4].text.strip(),
+        # }
+        # # Append the row data to the list
+       
+        # table_data.append(row_data)
 
     # Convert the table data to JSON format
     table_json = json.dumps(table_data, indent=4)
-    print(table_json)
-   
 
 
 
 # Iterating over Venues (Opening Venue Pages)
 for venue in venues:
-    open_venue_page = select_activity_pickleball(venue)
-    if open_venue_page:
-        venue["is_multiple_court"]  = check_if_multiple_courts(venue)
-        venue["court_count"] = get_number_of_courts(venue)
-    else:
-        venue["is_multiple_court"]  = check_if_multiple_courts(venue)
-        venue["court_count"] = get_number_of_courts(venue)
-    slot_table = get_slot_table()    
-    if slot_table:
-        get_slot_data_from_table(slot_table)
-        # print(slot_table)
-    break   
+      open_venue_page = select_activity_pickleball(venue)
+      if open_venue_page:
+          venue["is_multiple_court"]  = check_if_multiple_courts(venue)
+          venue["court_count"] = get_number_of_courts(venue)
+      else:
+          venue["is_multiple_court"]  = check_if_multiple_courts(venue)
+          venue["court_count"] = get_number_of_courts(venue)
 
 
+# Writing The output to json file
+try:
+    with open(DATA_FILE_PATH, 'w') as fp:
+        json.dump(venues, fp, indent=4)
+    print(f"Output written to: {DATA_FILE_PATH}")
 
-
-
-
-# # Writing The output to json file
-# try:
-#     with open(DATA_FILE_PATH, 'w') as fp:
-#         json.dump(venues, fp, indent=4)
-#     print(f"Output written to: {DATA_FILE_PATH}")
-
-# except Exception as e:
-#     print(f"Error writing output to JSON: {e}")
+except Exception as e:
+    print(f"Error writing output to JSON: {e}")
 
 driver.quit()

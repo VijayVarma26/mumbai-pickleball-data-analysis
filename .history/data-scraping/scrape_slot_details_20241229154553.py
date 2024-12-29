@@ -72,39 +72,21 @@ def get_slot_table():
 def get_slot_data_from_table(table):
     table_html = table.get_attribute('outerHTML')
     soup = BeautifulSoup(table_html, 'html.parser')
+    # print(soup.prettify())
 
     table_data = []
-    days = []
-    row_num = 1
-
+    # Iterate over rows in the table body
+    
     for row in soup.find('tbody').find_all('tr'):
-        if row_num == 1:
-            days = [day.text for day in row.find_all('td')]
-            print(f"Days: {days}")
-        else:
-            row_data = {}
-            row_data['time'] = row.find_all('td')[0].text
-            row_data['is_slot_exist'] = True if row.find_all('td')[1].text else False
-            
-            # Extract price and left elements
-            price_div = row.find_all('td')[1].find('div', class_='slot-item available')
-            if price_div:
-                row_data['price'] = price_div.find('p', class_='price').text.strip()
-                row_data['left'] = price_div.find('p', class_='left').text.strip()
-            else:
-                row_data['price'] = "N/A"
-                row_data['left'] = "N/A"
-            
-            # Append the row data to table_data
-            table_data.append(row_data)
-            print(f"{row_num} -  {row_data}")
-
-        row_num += 1
+        row_data = {}
+        row_data['time'] = row.find_all('td')[0].text
+        row_data['court'] = row.find_all('td')[1].text
+        row_data['price'] = row.find_all('td')[2].text
+        row_data['action'] = row.find_all('td')[3].text
+        table_data.append(row_data)
 
     # Convert the table data to JSON format
     table_json = json.dumps(table_data, indent=4)
-    print(table_json)
-   
 
 
 
