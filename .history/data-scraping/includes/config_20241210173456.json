@@ -1,0 +1,5 @@
+{
+    "selenium": {
+        "driver_path" : "C:/Project/New folder/Picleball/static/chromedriver.exe"
+    }
+}
