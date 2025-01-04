@@ -143,20 +143,11 @@ for venue in venues:
     slot_table = get_slot_table()    
     if slot_table:
         slots_data = get_slot_data_from_table(slot_table)
-        # print(slot_table)
     break   
 
 
 
 
 
-# # Writing The output to json file
-# try:
-#     with open(DATA_FILE_PATH, 'w') as fp:
-#         json.dump(venues, fp, indent=4)
-#     print(f"Output written to: {DATA_FILE_PATH}")
-
-# except Exception as e:
-#     print(f"Error writing output to JSON: {e}")
 
 driver.quit()
