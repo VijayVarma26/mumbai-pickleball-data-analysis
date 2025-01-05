@@ -1,15 +1,12 @@
-from selenium.webdriver import Chrome
-from selenium.webdriver.chrome.service import Service
+from includes.common_functions import initialize_selenium_driver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import json
 import os
 
-# Path to ChromeDriver
-driver_path = r'C:/Project/New folder/Picleball/static/chromedriver.exe'
-service = Service(executable_path=driver_path)
-driver = Chrome(service=service)
+driver = initialize_selenium_driver()
+
 
 driver.implicitly_wait(10)
 driver.get("https://hudle.in/pages/pickleball-venues-mumbai")

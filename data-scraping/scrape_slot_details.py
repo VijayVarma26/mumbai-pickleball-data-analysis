@@ -1,5 +1,4 @@
-from selenium.webdriver import Chrome
-from selenium.webdriver.chrome.service import Service
+from includes.common_functions import initialize_selenium_driver 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -10,14 +9,9 @@ import json
 
 
 
-DRIVER_PATH = r'C:/Project/New folder/Picleball/static/chromedriver.exe'
 DATA_FILE_PATH = "./data-scraping/scraped-data/hudle_venues_data.json"
 
-service = Service(executable_path=DRIVER_PATH)
-driver = Chrome(service=service)
-driver.maximize_window()
-driver.implicitly_wait(10)
-
+driver = initialize_selenium_driver()
 
 if not os.path.exists(DATA_FILE_PATH):
     print(f"JSON file not found at {DATA_FILE_PATH}. Please check the file path.")
@@ -28,7 +22,7 @@ with open(DATA_FILE_PATH, 'r') as f:
     venues = json.load(f)
 
 
-# This is used to click  selecting Activity Pickleball
+# This is used to click on select Activity Pickleball
 def select_activity_pickleball(venue):
     try:
         driver.get(venue["venue_link"])
@@ -126,12 +120,12 @@ def get_slot_data_from_table(table):
         "slots": day4
     })
 
-    # Convert the table data to JSON format
+    # Convert table data to JSON format
     table_json = json.dumps(table_data, indent=4)
     return table_json
 
 
-# Iterating over Venues (Opening Venue Pages)
+# Iterating over Venues Pages
 for venue in venues:
     open_venue_page = select_activity_pickleball(venue)
     if open_venue_page:
@@ -144,10 +138,6 @@ for venue in venues:
     if slot_table:
         slots_data = get_slot_data_from_table(slot_table)
     break   
-
-
-
-
 
 
 driver.quit()

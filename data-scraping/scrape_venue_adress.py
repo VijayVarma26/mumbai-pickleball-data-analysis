@@ -1,21 +1,15 @@
-from selenium.webdriver import Chrome
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from includes.common_functions import initialize_selenium_driver
 import json
 import os
 
 
-driver_path = r'C:/Project/New folder/Picleball/static/chromedriver.exe'
-
-service = Service(executable_path=driver_path)
-driver = Chrome(service=service)
-driver.maximize_window()
-driver.implicitly_wait(10)
-
-
+driver = initialize_selenium_driver()
 data_file_path = "./data-scraping/scraped-data/hudle_venues_data.json"
+
+
 if not os.path.exists(data_file_path):
     print(f"JSON file not found at {data_file_path}. Please check the file path.")
     driver.quit()
@@ -38,7 +32,6 @@ for venue in venues:
     except Exception as e:
         print(f"Error fetching address for {venue['Title']}: {e}")
         venue["Address"] = "N/A" 
-
 
 try:
     with open(data_file_path, 'w') as fp:
