@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 import json
 
 
-
 DATA_FILE_PATH = "./data-scraping/scraped-data/hudle_venues_data.json"
 
 driver = initialize_selenium_driver()
@@ -124,19 +123,30 @@ def get_slot_data_from_table(table):
     table_json = json.dumps(table_data, indent=4)
     return table_json
 
+def switch_between_multiple_courts(court_count):
+    for i in range(1, court_count+1):
+        try:
+            court = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, f"//div[contains(@class, 'style_bookingCard__33ck6')][{i}]"))
+            )
+            court.click()
+            time.sleep(2)
+        except Exception as e:
+            print(f"Error switching between courts: {e}")
+    pass
 
 # Iterating over Venues Pages
 for venue in venues:
     open_venue_page = select_activity_pickleball(venue)
     if open_venue_page:
-        venue["is_multiple_court"]  = check_if_multiple_courts(venue)
-        venue["court_count"] = get_number_of_courts(venue)
-    else:
-        venue["is_multiple_court"]  = check_if_multiple_courts(venue)
-        venue["court_count"] = get_number_of_courts(venue)
-    slot_table = get_slot_table()    
+        if venue["court_count"]> 0:
+            switch_between_multiple_courts(venue["court_count"])
+
+        else: 
+            slot_table = get_slot_table()    
     if slot_table:
         slots_data = get_slot_data_from_table(slot_table)
+        print(slots_data)
     break   
 
 
