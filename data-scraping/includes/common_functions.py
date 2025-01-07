@@ -20,7 +20,11 @@ def write_slot_to_json(file_name, json_data):
 
 # Common function used to read data from json file with file_name
 def read_json_file(file_path, file_name):
-    file = os.path.join(file_path, file_name)
-    with open(file, 'r') as f:
-        data = json.load(f)
-    return data
+    try:
+        file = os.path.join(file_path, file_name)
+        with open(file, 'r') as f:
+            data = json.load(f)
+        return data
+    except Exception as e:
+        print(f"Error reading JSON file: {e}")
+        return None

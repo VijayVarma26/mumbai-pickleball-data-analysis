@@ -7,8 +7,8 @@ import time
 import json
 
 
-DATA_FILE_PATH = "./data-scraping/scraped-data/hudle_venues_data.json"
-
+DATA_FILE_PATH = "./data-scraping/scraped-data/"
+DATA_FILE_NAME = "hudle_venues_data.json"
 driver = initialize_selenium_driver()
 
 if not os.path.exists(DATA_FILE_PATH):
