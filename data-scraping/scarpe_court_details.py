@@ -1,4 +1,4 @@
-from includes.common_functions import initialize_selenium_driver 
+from includes.common_functions import initialize_selenium_driver , read_json_file
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,11 +11,12 @@ DATA_FILE_PATH = "./data-scraping/scraped-data/"
 DATA_FILE_NAME = "hudle_venues_data.json"
 driver = initialize_selenium_driver()
 
-if not os.path.exists(DATA_FILE_PATH):
-    print(f"JSON file not found at {DATA_FILE_PATH}. Please check the file path.")
-    driver.quit()
-    exit()
+if not os.path.exists(DATA_FILE_PATH+DATA_FILE_NAME):
+   print(f"JSON file not found at {DATA_FILE_PATH+DATA_FILE_NAME}. Please check the file path.")
+   driver.quit()
+   exit()
 
+# venues = read_json_file(DATA_FILE_PATH, DATA_FILE_NAME)
 with open(DATA_FILE_PATH, 'r') as f:
     venues = json.load(f)
 

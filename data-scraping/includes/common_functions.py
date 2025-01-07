@@ -12,7 +12,7 @@ def initialize_selenium_driver():
     driver.implicitly_wait(10)
     return driver
 
-# Common function used to write data to json file with file_name
+# Write data to json file with file_name
 def write_slot_to_json(file_name, json_data):
     try:
         with open(file_name, 'w') as f:
@@ -21,8 +21,8 @@ def write_slot_to_json(file_name, json_data):
     except Exception as e:
         print(f"Error writing JSON file: {e}")
         
-        
-# Common function used to read data from json file with file_name
+
+# Read data from json file with file_name
 def read_json_file(file_path, file_name):
     try:
         file = os.path.join(file_path, file_name)
@@ -32,3 +32,5 @@ def read_json_file(file_path, file_name):
     except Exception as e:
         print(f"Error reading JSON file: {e}")
         return None
+    
+    
