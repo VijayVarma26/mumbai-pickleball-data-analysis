@@ -4,7 +4,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
 import time
-from bs4 import BeautifulSoup
 import json
 
 
@@ -35,12 +34,29 @@ def select_activity_pickleball(venue):
         print(f"Error fetching address for {venue['title']}: {e}")    
         return False
 
+def get_court_data():
+    facility_cards = driver.find_elements(By.CLASS_NAME, "style_bookingCard__33ck6")
+    courts = []
+    for card in facility_cards:
+        facility_name = card.find_element(By.CLASS_NAME, "style_facilityName__2rCni").text
+        operating_hours = card.find_element(By.CLASS_NAME, "txt--blue-light").text
+        price = card.find_element(By.CLASS_NAME, "fw--600").text
+
+        courts.append({
+            "facility_name": facility_name,
+            "operating_hours": operating_hours,
+            "price": price
+        })
+
+    courts_json = json.dumps(courts, indent=4)
+    return courts_json
+
 def check_if_multiple_courts(venue):
     try:
         courts = driver.find_elements(By.XPATH, "//div[contains(@class, 'style_bookingCard__33ck6')]")
         if len(courts) > 1:
-            return True
-        return False
+            courts = get_court_data()
+            return courts
     except Exception as e:
         return False
     
@@ -50,15 +66,19 @@ def get_number_of_courts(venue):
     except Exception as e:
         return 1
 
-
-
-
 # Iterating over Venues Pages
 for venue in venues:
     open_venue_page = select_activity_pickleball(venue)
     if open_venue_page:
-        pass
-       
+        select_activity_pickleball(venue)
+        get_number_of_courts(venue)
+
+        courts = check_if_multiple_courts(venue)
+        if courts:
+            venue["courts"] = courts
+        else:
+            venue["courts"] = []
+        
 
 
 driver.quit()

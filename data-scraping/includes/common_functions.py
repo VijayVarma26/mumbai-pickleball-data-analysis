@@ -1,6 +1,7 @@
 import json
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.service import Service
+import os
 
 # Initializing the selenium Driver
 def initialize_selenium_driver():
@@ -16,3 +17,10 @@ def write_slot_to_json(file_name, json_data):
     with open(file_name, 'w') as f:
         json_data = json.dump(json_data, f, indent=4)
         print(f"Data written to {file_name}")
+
+# Common function used to read data from json file with file_name
+def read_json_file(file_path, file_name):
+    file = os.path.join(file_path, file_name)
+    with open(file, 'r') as f:
+        data = json.load(f)
+    return data
