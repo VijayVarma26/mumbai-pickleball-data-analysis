@@ -129,11 +129,16 @@ def switch_between_multiple_courts(court_count):
             court = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, f"//div[contains(@class, 'style_bookingCard__33ck6')][{i}]"))
             )
+            
             court.click()
             time.sleep(2)
+            slot_table = get_slot_table()
+            if slot_table:
+                slots_data = get_slot_data_from_table(slot_table)
+                print(slots_data)
         except Exception as e:
             print(f"Error switching between courts: {e}")
-    pass
+    
 
 # Iterating over Venues Pages
 for venue in venues:
@@ -147,7 +152,7 @@ for venue in venues:
     if slot_table:
         slots_data = get_slot_data_from_table(slot_table)
         print(slots_data)
-    break   
+    # break   
 
 
 driver.quit()

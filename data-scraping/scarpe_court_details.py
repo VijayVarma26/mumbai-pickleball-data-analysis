@@ -32,7 +32,7 @@ def select_activity_pickleball(venue):
         time.sleep(2)
         return True
     except Exception as e:
-        print(f"Error fetching address for {venue['title']}: {e}")    
+        print(f"Error fetching address for {venue['title']}: {e}")
         return False
 
 def get_court_data():
