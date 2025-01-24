@@ -39,7 +39,7 @@ for venue in venue_elements:
 
 driver.quit()
 
-output_dir = './data-scraping/scraped-data/'
+output_dir = './data-scraping/scraped_data/'
 os.makedirs(output_dir, exist_ok=True)
 
 output_file = os.path.join(output_dir, 'hudle_venues_data.json')

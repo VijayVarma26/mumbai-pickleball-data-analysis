@@ -6,7 +6,7 @@
         "venue_link": "https://hudle.in/venues/pro-world-talent-pickleball-4-bunglows-andheri-west/455484",
         "address": "Karmveer Sports Complex, RTO road, Four Bungalows, Near Kokilaben Hospital, Andheri (West), Mumbai - 400053",
         "is_multiple_court": false,
-        "court_count": 0
+        "court_count": 1
     },
     {
         "title": "Maniac Pickleball Arena | Vile Parle (West) | GTC",
@@ -15,7 +15,7 @@
         "venue_link": "https://hudle.in/venues/maniac-pickleball-arena-vile-parle-west-gtc/987643",
         "address": "I-One Terrace, Chandan Apartments, Swami Vivekananda Road, near Golden Tobacco, Indira Nagar, Vile Parle West, Mumbai.",
         "is_multiple_court": false,
-        "court_count": 0,
+        "court_count": 1,
         "odd_case": true
     },
     {
@@ -142,7 +142,7 @@
         "venue_link": "https://hudle.in/venues/willingdon-sports-club/539638",
         "address": "Willingdon Outdoor Sports Arena at the Maali Khata, Bodyguard Lane, Haji Ali, Mumbai 400 011",
         "is_multiple_court": false,
-        "court_count": 0
+        "court_count": 1
     },
     {
         "title": "Maks Pickleball | Mihir Sen Sports Complex (Indoor)",
@@ -151,7 +151,7 @@
         "venue_link": "https://hudle.in/venues/maks-pickleball-dahisar/697092",
         "address": "Mihir Sen Sports Complex, Near LODHA AQUA, opp. Central Mall, Pandurang Wadi, Mahajan Wadi, Mira Road East, Mira Bhayandar, Maharashtra 401107",
         "is_multiple_court": false,
-        "court_count": 0
+        "court_count": 1
     },
     {
         "title": "Torba Pickleball Centre",
@@ -169,7 +169,7 @@
         "venue_link": "https://hudle.in/venues/global-sports-pickleball-center-pcp-condiminium/925673",
         "address": "Peninsula Corporate park, Ganapatrao Kadam Marg, Lower Parel West, Mumbai, Maharashtra 400013",
         "is_multiple_court": false,
-        "court_count": 0
+        "court_count": 1
     },
     {
         "title": "Sportzella Pickleball Center",
@@ -205,7 +205,7 @@
         "venue_link": "https://hudle.in/venues/manohar-joshi-pickleball-court/297284",
         "address": "Manohar Joshi College, Near Maharashtra Nature Park, PMGP Colony, Sion East, Mumbai 400017",
         "is_multiple_court": false,
-        "court_count": 0
+        "court_count": 1
     },
     {
         "title": "Global Sports Pickleball Center | Juhu",
@@ -214,7 +214,7 @@
         "venue_link": "https://hudle.in/venues/the-pickleball-company-by-global-sports-juhu/518657",
         "address": "N A. Ahuja Marg, Near Ritambhara College, Juhu, Mumbai - 400049",
         "is_multiple_court": false,
-        "court_count": 0
+        "court_count": 1
     },
     {
         "title": "Maks Pickleball | Mira Road",
@@ -232,7 +232,7 @@
         "venue_link": "https://hudle.in/venues/global-sports-pickleball-centre-nsm-school-vile-parle-east/122290",
         "address": "NSM School, Dixit Road, Vile Parle East, near Ashish Hospital",
         "is_multiple_court": false,
-        "court_count": 0
+        "court_count": 1
     },
     {
         "title": "The Cricket Club Of India",
@@ -259,6 +259,6 @@
         "venue_link": "https://hudle.in/venues/the-pickleball-company-by-global-sports-goregaon-west/127710",
         "address": "Stellar World School, Off New Link Rd, Prarthana Society, Motilal Nagar I, Goregaon West, Mumbai, Maharashtra 400104",
         "is_multiple_court": false,
-        "court_count": 0
+        "court_count": 1
     }
 ]

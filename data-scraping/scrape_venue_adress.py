@@ -7,7 +7,7 @@ import os
 
 
 driver = initialize_selenium_driver()
-data_file_path = "./data-scraping/scraped-data/hudle_venues_data.json"
+data_file_path = "./data-scraping/scraped_data/hudle_venues_data.json"
 
 
 if not os.path.exists(data_file_path):

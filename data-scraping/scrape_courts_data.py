@@ -7,7 +7,7 @@ import time
 import json
 
 
-DATA_FILE_PATH = "./data-scraping/scraped-data/"
+DATA_FILE_PATH = "./data-scraping/scraped_data/"
 DATA_FILE_NAME = "hudle_venues_data.json"
 driver = initialize_selenium_driver()
 
@@ -21,7 +21,7 @@ with open(DATA_FILE_PATH, 'r') as f:
     venues = json.load(f)
 
 
-# This is used to click on select Activity Pickleball
+# Clicking on Activity Pickleball
 def select_activity_pickleball(venue):
     try:
         driver.get(venue["venue_link"])
@@ -79,7 +79,5 @@ for venue in venues:
             venue["courts"] = courts
         else:
             venue["courts"] = []
-        
-
 
 driver.quit()
