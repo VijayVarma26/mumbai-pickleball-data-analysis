@@ -129,7 +129,6 @@ def switch_between_multiple_courts(court_count):
             court = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, f"//div[contains(@class, 'style_bookingCard__33ck6')][{i}]"))
             )
-
             court.click()
             time.sleep(2)
             slot_table = get_slot_table()

@@ -5,7 +5,7 @@ import os
 
 # Initializing the selenium Driver
 def initialize_selenium_driver():
-    DRIVER_PATH = r'C:/Project/New folder/Picleball/static/chromedriver.exe'
+    DRIVER_PATH = r'C:/Project/New folder/Pickleball/static/chromedriver.exe'
     service = Service(executable_path=DRIVER_PATH)
     driver = Chrome(service=service)
     driver.maximize_window()
