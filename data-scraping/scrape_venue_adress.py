@@ -7,7 +7,8 @@ import os
 
 
 driver = initialize_selenium_driver()
-data_file_path = "./data-scraping/scraped_data/hudle_venues_data.json"
+data_file_path = r"C:\Project\New folder\Pickleball\data-scraping\scraped_data\hudle_venues_data_22-03-2025.json"
+# data_file_path = "./data-scraping/scraped_data/hudle_venues_data_22-03-2025.json"
 
 
 if not os.path.exists(data_file_path):
@@ -22,7 +23,6 @@ with open(data_file_path, 'r') as f:
 for venue in venues:
     try:
         driver.get(venue["venue_link"])
-
         address_element = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//div[@class ='txt--blue-70 d-flex']/p"))
         )
