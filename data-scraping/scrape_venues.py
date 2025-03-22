@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import json
 import os
+from datetime import datetime
 
 driver = initialize_selenium_driver()
 
@@ -20,7 +21,6 @@ venues = []
 
 for venue in venue_elements:
     try:
-
         title = venue.find_element(By.XPATH, ".//h2[@class='title-head text-truncate']").text
         location = venue.find_element(By.XPATH, ".//p[@class='ellipsis']").text
         price = venue.find_element(By.XPATH, ".//span[@class='info-text']").text
@@ -39,10 +39,12 @@ for venue in venue_elements:
 
 driver.quit()
 
-output_dir = './data-scraping/scraped_data/'
+output_dir = './scraped_data/'
 os.makedirs(output_dir, exist_ok=True)
 
-output_file = os.path.join(output_dir, 'hudle_venues_data_22-03-2035.json')
+# Get the current date in dd-mm-yyyy format
+current_date = datetime.now().strftime("%d-%m-%Y")
+output_file = os.path.join(output_dir, f'hudle_venues_data_{current_date}.json')
 try:
     with open(output_file, 'w') as fp:
         json.dump(venues, fp, indent=4)
