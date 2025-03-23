@@ -2,6 +2,7 @@ import json
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.service import Service
 import os
+import csv
 
 # Initializing the selenium Driver
 def initialize_selenium_driver():
@@ -33,4 +34,23 @@ def read_json_file(file_path, file_name):
         print(f"Error reading JSON file: {e}")
         return None
     
-    
+    # Convert JSON data to CSV file
+    def json_to_csv(json_data, csv_file_name):
+        try:
+            # Open CSV file for writing
+            with open(csv_file_name, 'w', newline='') as csv_file:
+                # Create a CSV writer object
+                csv_writer = csv.writer(csv_file)
+                
+                # Write the header row
+                header = json_data[0].keys()
+                csv_writer.writerow(header)
+                
+                # Write the data rows
+                for row in json_data:
+                    csv_writer.writerow(row.values())
+                    
+            print(f"Data successfully written to {csv_file_name}")
+        except Exception as e:
+            print(f"Error converting JSON to CSV: {e}")
+            
