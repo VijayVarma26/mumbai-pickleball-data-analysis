@@ -3,9 +3,9 @@ import folium
 
 # Sample DataFrame (Replace this with your actual data)
 data = {
-    "Venue": ["Wankhede Stadium", "Brabourne Stadium", "DY Patil Stadium"],
-    "Latitude": [18.9389, 18.9362, 19.0434],
-    "Longitude": [72.8258, 72.8277, 73.0272]
+    "Venue": ["Wankhede Stadium", "Brabourne Stadium", "DY Patil Stadium", "Maniac Pickleball Arena | Vile Parle"],
+    "Latitude": [18.9389, 18.9362, 19.0434, 19.10494],
+    "Longitude": [72.8258, 72.8277, 73.0272, 72.83864]
 }
 
 df = pd.DataFrame(data)
