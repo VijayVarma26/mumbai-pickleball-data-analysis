@@ -40,11 +40,9 @@ def json_to_csv(json_data, csv_file_name):
         with open(csv_file_name, 'w', newline='', encoding='utf-8') as csv_file:
             # Create a CSV writer object
             csv_writer = csv.writer(csv_file)
-            
             # Write the header row
             header = json_data[0].keys()
             csv_writer.writerow(header)
-            
             # Write the data rows
             for row in json_data:
                 csv_writer.writerow(row.values())
