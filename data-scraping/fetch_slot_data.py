@@ -6,7 +6,7 @@ url = "https://api.hudle.in/api/v1/venues/ce7f35e8-8486-4623-8d9c-0a7d01e3f40f/f
 # Query Parameters
 params = {
     "start_date": "2025-03-26",
-    "end_date": "2025-03-29",
+    "end_date": "2025-03-27",
     "grid": 1
 }
 
