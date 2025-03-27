@@ -1,7 +1,7 @@
 import requests
 
 # API Endpoint
-url = "https://api.hudle.in/api/v1/venues/ce7f35e8-8486-4623-8d9c-0a7d01e3f40f/facilities/ad6a64db-360d-4c1d-9628-22cb6f751faa/slots"
+url = "https://api.hudle.in/api/v1/venues/ce7f35e8-8486-4623-8d9c-0a7d01e3f40f/facilities/5ee2b31f-af67-4453-9cd0-cc63a3485215/slots"
 
 # Query Parameters
 params = {
