@@ -61,3 +61,14 @@ def read_csv_file(file_path):
     except Exception as e:
         print(f"Error reading CSV file: {e}")
         return None
+
+def get_config():
+    try:
+        with open('../../../static/config.json', 'r') as config_file:
+            config = json.load(config_file)
+            return config
+    except Exception as e:
+        print(f"Error reading config file: {e}")
+        return None
+    
+print(get_config())    
