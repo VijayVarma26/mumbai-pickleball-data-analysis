@@ -1,0 +1,17 @@
+{
+    "selenium": {
+        "driver_path" : "./static/chromedriver.exe"
+    },
+    "file_paths":
+    {
+        "folders":{
+            "raw_data_folder": "./data/raw_data"
+            
+        },
+        "file_paths":{
+            "venue_data_csv": "/venue_data/hudle_venues_data.csv",
+            "court_data_csv": "./court_data/hudle_court_data.csv"
+        }
+    }
+    
+}

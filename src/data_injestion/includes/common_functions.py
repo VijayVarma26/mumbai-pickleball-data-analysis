@@ -3,6 +3,7 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.service import Service
 import os
 import csv
+import pandas as pd
 
 # Initializing the selenium Driver
 def initialize_selenium_driver():
@@ -50,3 +51,13 @@ def json_to_csv(json_data, csv_file_name):
         print(f"Data successfully written to {csv_file_name}")
     except Exception as e:
         print(f"Error converting JSON to CSV: {e}")
+ 
+
+#  Read csv file
+def read_csv_file(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        print(f"Error reading CSV file: {e}")
+        return None
