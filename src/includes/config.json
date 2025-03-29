@@ -5,8 +5,8 @@
     "file_paths":
     {
         "folders":{
-            "raw_data_folder": "./data/raw_data"
-            
+            "raw_data_folder": "../../data/raw_data",
+            "raw_injested_data" : "../../data/raw_injested_data"
         },
         "file_paths":{
             "venue_data_csv": "/venue_data/hudle_venues_data.csv",
