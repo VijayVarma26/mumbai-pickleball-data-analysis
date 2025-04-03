@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_fc73741d51ced797c6fe771e96d545af {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_fc73741d51ced797c6fe771e96d545af" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_fc73741d51ced797c6fe771e96d545af = L.map(
+                "map_fc73741d51ced797c6fe771e96d545af",
+                {
+                    center: [18.96, 72.82],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_34290619c8ccd6d5d1fe93d44253402f = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_34290619c8ccd6d5d1fe93d44253402f.addTo(map_fc73741d51ced797c6fe771e96d545af);
+        
+    
+            var marker_2298dc4f41f66d21b9da5bc87cad52da = L.marker(
+                [18.9389, 72.8258],
+                {
+}
+            ).addTo(map_fc73741d51ced797c6fe771e96d545af);
+        
+    
+            var icon_43dd1949a81ddb919b8d6d4c6fa77f86 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b1da1169b48e2198d636d948e031c3d6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c5582c835e4db7a9ad3aa70d5cbcae38 = $(`<div id="html_c5582c835e4db7a9ad3aa70d5cbcae38" style="width: 100.0%; height: 100.0%;">Wankhede Stadium</div>`)[0];
+                popup_b1da1169b48e2198d636d948e031c3d6.setContent(html_c5582c835e4db7a9ad3aa70d5cbcae38);
+            
+        
+
+        marker_2298dc4f41f66d21b9da5bc87cad52da.bindPopup(popup_b1da1169b48e2198d636d948e031c3d6)
+        ;
+
+        
+    
+    
+                marker_2298dc4f41f66d21b9da5bc87cad52da.setIcon(icon_43dd1949a81ddb919b8d6d4c6fa77f86);
+            
+    
+            var marker_5ac356ffa39fbf09d27cef82da99a804 = L.marker(
+                [18.9362, 72.8277],
+                {
+}
+            ).addTo(map_fc73741d51ced797c6fe771e96d545af);
+        
+    
+            var icon_67b39f7089a2c5c8ce610983ed65481e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9b7115a99169915c22cf9ea71c02155c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ad7b5e2d18f3270e23751acec7a81ea9 = $(`<div id="html_ad7b5e2d18f3270e23751acec7a81ea9" style="width: 100.0%; height: 100.0%;">Brabourne Stadium</div>`)[0];
+                popup_9b7115a99169915c22cf9ea71c02155c.setContent(html_ad7b5e2d18f3270e23751acec7a81ea9);
+            
+        
+
+        marker_5ac356ffa39fbf09d27cef82da99a804.bindPopup(popup_9b7115a99169915c22cf9ea71c02155c)
+        ;
+
+        
+    
+    
+                marker_5ac356ffa39fbf09d27cef82da99a804.setIcon(icon_67b39f7089a2c5c8ce610983ed65481e);
+            
+    
+            var marker_c2b77a2f9a883093fb71b3e56db66794 = L.marker(
+                [19.0434, 73.0272],
+                {
+}
+            ).addTo(map_fc73741d51ced797c6fe771e96d545af);
+        
+    
+            var icon_6ebe3e8a5a9f066ec4de554baf2fd786 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_246d71b165386edd5024fa859fd4b9a4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cb44242789fb23a942e1fa9d0afefb31 = $(`<div id="html_cb44242789fb23a942e1fa9d0afefb31" style="width: 100.0%; height: 100.0%;">DY Patil Stadium</div>`)[0];
+                popup_246d71b165386edd5024fa859fd4b9a4.setContent(html_cb44242789fb23a942e1fa9d0afefb31);
+            
+        
+
+        marker_c2b77a2f9a883093fb71b3e56db66794.bindPopup(popup_246d71b165386edd5024fa859fd4b9a4)
+        ;
+
+        
+    
+    
+                marker_c2b77a2f9a883093fb71b3e56db66794.setIcon(icon_6ebe3e8a5a9f066ec4de554baf2fd786);
+            
+    
+            var marker_386b56596fe9616fa598b3e36983a1a5 = L.marker(
+                [19.10494, 72.83864],
+                {
+}
+            ).addTo(map_fc73741d51ced797c6fe771e96d545af);
+        
+    
+            var icon_267f6e772ba56f024fed9185946d46eb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_676fe56806fce7e18290dc6866a08eec = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_19b813e58d20e5782dd55b0a6dfaaf92 = $(`<div id="html_19b813e58d20e5782dd55b0a6dfaaf92" style="width: 100.0%; height: 100.0%;">Maniac Pickleball Arena | Vile Parle</div>`)[0];
+                popup_676fe56806fce7e18290dc6866a08eec.setContent(html_19b813e58d20e5782dd55b0a6dfaaf92);
+            
+        
+
+        marker_386b56596fe9616fa598b3e36983a1a5.bindPopup(popup_676fe56806fce7e18290dc6866a08eec)
+        ;
+
+        
+    
+    
+                marker_386b56596fe9616fa598b3e36983a1a5.setIcon(icon_267f6e772ba56f024fed9185946d46eb);
+            
+</script>
+</html>
