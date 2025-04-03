@@ -79,8 +79,6 @@ fig2.update_layout(
     template="plotly_white"  # Use a clean and modern template
 )
 
-# Show both plots on the same page
-
 # Create a subplot figure
 fig_combined = make_subplots(
     rows=1, cols=2, 
