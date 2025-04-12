@@ -2,8 +2,13 @@ import os
 import pandas as pd
 
 def get_csv_files(input_folder):
-    """Collect all CSV files in the folder."""
-    return [f for f in os.listdir(input_folder) if f.endswith('.csv')]
+    """Recursively collect all CSV files in the folder and its subfolders."""
+    csv_files = []
+    for root, _, files in os.walk(input_folder):
+        for file in files:
+            if file.endswith('.csv'):
+                csv_files.append(os.path.join(root, file))
+    return csv_files
 
 def read_csv_files(input_folder, csv_files):
     """Read each CSV file and return a list of dataframes."""
@@ -29,8 +34,13 @@ def get_output_file_name(input_folder):
     folder_name = os.path.basename(input_folder)
     return f"{folder_name}_combined.csv"
 
-def main():
-    input_folder = r'C:\Project\New folder\Pickleball\data\raw_data\injested_data\987643\2025-01-29'
+def get_all_venue_ids(venue_data_file):
+    """Extract all court IDs from the venue data file."""
+    df = pd.read_csv(venue_data_file)
+    return df['venue_id'].unique().tolist()
+
+def collate_transformed_data_by_venue_id(venue_id):
+    input_folder = r'C:\Project\New folder\Pickleball\data\raw_data\injested_data\\' + str(venue_id)
     output_file_name = get_output_file_name(input_folder)
     output_file = os.path.join(input_folder, output_file_name)
 
@@ -39,5 +49,12 @@ def main():
     combined_df = combine_dataframes(dataframes)
     save_combined_dataframe(combined_df, output_file)
 
+def main():
+    venue_id_list = get_all_venue_ids(r'C:\Project\New folder\Pickleball\data\raw_data\venue_data\hudle_venues_data.csv')
+
+    for venue_id in venue_id_list:
+        collate_transformed_data_by_venue_id(venue_id)
+    print("Collation of transformed data completed.")
+    
 if __name__ == "__main__":
     main()
