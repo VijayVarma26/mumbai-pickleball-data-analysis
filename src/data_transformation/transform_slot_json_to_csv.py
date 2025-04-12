@@ -142,5 +142,5 @@ def main():
 
 
 if __name__ == "__main__":
-    # main()
-    process_single_file(r'C:\Project\New folder\Pickleball\data\raw_data\injested_data\960306\2025-01-29\102.json')
+    main()
+    # process_single_file(r'C:\Project\New folder\Pickleball\data\raw_data\injested_data\960306\2025-01-29\102.json')
