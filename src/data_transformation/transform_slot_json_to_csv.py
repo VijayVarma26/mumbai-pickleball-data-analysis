@@ -36,17 +36,21 @@ def transform_to_dataframe(flattened_data):
     """Transform the flattened data into a pandas DataFrame."""
     df = pd.DataFrame(flattened_data)
     # Drop extra columns
-    df = df.drop(columns=['is_empty', 'id', 'facility_id', 'has_linked_facilities', 'created_at', 'updated_at'])
+    df = df.drop(columns=['is_empty', 'id', 'facility_id', 'has_linked_facilities', 'created_at', 'updated_at', 'facility_name', 'facility_uuid'])
     # Rearrange columns in the desired order
-    column_order = ['assigned_venue_id', 'assigned_court_id', 'facility_name', 'facility_uuid', 'date', 'start_time',
-                    'end_time', 'price', 'total_count', 'available_count', 'is_available', 'is_booked']
+    column_order = ['assigned_venue_id', 'assigned_court_id', 'date', 'start_time','end_time', 'price', 'total_count', 'available_count', 'is_available', 'is_booked']
     df = df[column_order]
+    
+    # Rename columns
+    df = df.rename(columns={'total_count': 'total_slot_count', 'available_count': 'available_slot_count'})
+
 
     # Add a column for the day of the week based on the 'date' column
     df['day_of_week'] = pd.to_datetime(df['date']).dt.strftime('%A')
 
     # Add a column for day category based on the day of the week
     df['day_category'] = df['day_of_week'].apply(lambda x: 'weekend' if x in ['Saturday', 'Sunday'] else 'weekday')
+
 
     # Add a column for slot category based on the 'start_time' column
     def categorize_slot(start_time):
@@ -88,36 +92,47 @@ def get_all_json_files(directory_path):
     return json_files
 
 
-def main():
-    # Define the directory containing JSON files
-    directory_path = r'C:\Project\New folder\Pickleball\data\raw_data\injested_data'
+def process_single_file(json_file):
+    """Process a single JSON file and save the transformed data to a CSV file."""
+    try:
+        # Extract IDs from the file path
+        assigned_venue_id, assigned_court_id = extract_ids_from_path(json_file)
 
+        # Define the output CSV file path based on the JSON file path
+        output_csv_path = os.path.splitext(json_file)[0] + '.csv'
+
+        # Load the JSON data
+        data = load_json_data(json_file)
+
+        # Flatten the slot data
+        flattened_data = flatten_slot_data(data, assigned_venue_id, assigned_court_id)
+
+        # Transform the flattened data into a DataFrame
+        df = transform_to_dataframe(flattened_data)
+
+        # Save the DataFrame to a CSV file
+        save_to_csv(df, output_csv_path)
+
+        print(f"Data successfully transformed and saved to {output_csv_path}")
+    except Exception as e:
+        print(f"An error occurred while processing {json_file}: {e}")
+
+
+def process_all_files(directory_path):
+    """Process all JSON files in the given directory."""
     # Get all JSON files in the directory
     json_files = get_all_json_files(directory_path)
 
     for json_file in json_files:
-        try:
-            # Extract IDs from the file path
-            assigned_venue_id, assigned_court_id = extract_ids_from_path(json_file)
+        process_single_file(json_file)
 
-            # Define the output CSV file path based on the JSON file path
-            output_csv_path = os.path.splitext(json_file)[0] + '.csv'
 
-            # Load the JSON data
-            data = load_json_data(json_file)
+def main():
+    # Define the directory containing JSON files
+    directory_path = r'C:\Project\New folder\Pickleball\data\raw_data\injested_data'
 
-            # Flatten the slot data
-            flattened_data = flatten_slot_data(data, assigned_venue_id, assigned_court_id)
-
-            # Transform the flattened data into a DataFrame
-            df = transform_to_dataframe(flattened_data)
-
-            # Save the DataFrame to a CSV file
-            save_to_csv(df, output_csv_path)
-
-            print(f"Data successfully transformed and saved to {output_csv_path}")
-        except Exception as e:
-            print(f"An error occurred while processing {json_file}: {e}")
+    # Process all JSON files in the directory
+    process_all_files(directory_path)
 
 
 if __name__ == "__main__":
