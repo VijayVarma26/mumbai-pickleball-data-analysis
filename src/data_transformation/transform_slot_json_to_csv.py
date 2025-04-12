@@ -36,21 +36,20 @@ def transform_to_dataframe(flattened_data):
     """Transform the flattened data into a pandas DataFrame."""
     df = pd.DataFrame(flattened_data)
     # Drop extra columns
-    df = df.drop(columns=['is_empty', 'id', 'facility_id', 'has_linked_facilities', 'created_at', 'updated_at', 'facility_name', 'facility_uuid'])
-    # Rearrange columns in the desired order
-    column_order = ['assigned_venue_id', 'assigned_court_id', 'date', 'start_time','end_time', 'price', 'total_count', 'available_count', 'is_available', 'is_booked']
-    df = df[column_order]
+    df = df.drop(columns=['is_empty', 'id', 'facility_id', 'has_linked_facilities', 'created_at', 'updated_at', 'facility_name', 'facility_uuid', 'is_available', 'is_booked'])
+    
     
     # Rename columns
-    df = df.rename(columns={'total_count': 'total_slot_count', 'available_count': 'available_slot_count'})
+    df = df.rename(columns={'total_count': 'total_slot_count', 'available_count': 'available_slot_count', 'price': 'slot_price'})
 
+    # Add a column for the booked slot count
+    df['booked_slot_count'] = df['total_slot_count'] - df['available_slot_count']
 
     # Add a column for the day of the week based on the 'date' column
     df['day_of_week'] = pd.to_datetime(df['date']).dt.strftime('%A')
 
     # Add a column for day category based on the day of the week
     df['day_category'] = df['day_of_week'].apply(lambda x: 'weekend' if x in ['Saturday', 'Sunday'] else 'weekday')
-
 
 
     # Add a column for slot category based on the 'start_time' column
@@ -71,10 +70,15 @@ def transform_to_dataframe(flattened_data):
 
     df['slot_category'] = df['start_time'].apply(categorize_slot)
 
-
     # Extract only the time part from the 'start_time' and 'end_time' columns
     df['start_time'] = pd.to_datetime(df['start_time']).dt.time
     df['end_time'] = pd.to_datetime(df['end_time']).dt.time
+
+
+    # Rearrange columns in the desired order
+    column_order = ['assigned_venue_id', 'assigned_court_id', 'date', 'day_of_week', 'day_category','start_time','end_time', 'slot_category','slot_price', 'total_slot_count','booked_slot_count', 'available_slot_count']
+    df = df[column_order]
+    
     return df
 
 
