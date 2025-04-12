@@ -24,10 +24,16 @@ def save_combined_dataframe(combined_df, output_file):
     combined_df.to_csv(output_file, index=False)
     print(f"Combined CSV file saved to: {output_file}")
 
+def get_output_file_name(input_folder):
+    """Generate the output file name based on the input folder."""
+    folder_name = os.path.basename(input_folder)
+    return f"{folder_name}_combined.csv"
+
 def main():
-    input_folder = os.path.dirname(__file__)  # Current folder
-    output_file = r'C:\Project\New folder\Pickleball\data\raw_data\injested_data\960306\2025-03-30\2025-03-03.csv'
-    
+    input_folder = r'C:\Project\New folder\Pickleball\data\raw_data\injested_data\987643\2025-01-29'
+    output_file_name = get_output_file_name(input_folder)
+    output_file = os.path.join(input_folder, output_file_name)
+
     csv_files = get_csv_files(input_folder)
     dataframes = read_csv_files(input_folder, csv_files)
     combined_df = combine_dataframes(dataframes)
