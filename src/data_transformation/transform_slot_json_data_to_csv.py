@@ -41,6 +41,31 @@ def transform_to_dataframe(flattened_data):
     column_order = ['assigned_venue_id', 'assigned_court_id', 'facility_name', 'facility_uuid', 'date', 'start_time',
                     'end_time', 'price', 'total_count', 'available_count', 'is_available', 'is_booked']
     df = df[column_order]
+
+    # Add a column for the day of the week based on the 'date' column
+    df['day_of_week'] = pd.to_datetime(df['date']).dt.strftime('%A')
+
+    # Add a column for day category based on the day of the week
+    df['day_category'] = df['day_of_week'].apply(lambda x: 'weekend' if x in ['Saturday', 'Sunday'] else 'weekday')
+
+    # Add a column for slot category based on the 'start_time' column
+    def categorize_slot(start_time):
+        if pd.Timestamp('04:00:00') <= start_time <= pd.Timestamp('08:59:59'):
+            return 'Early Morning'
+        elif pd.Timestamp('09:00:00') <= start_time <= pd.Timestamp('11:59:59'):
+            return 'Late Morning'
+        elif pd.Timestamp('12:00:00') <= start_time <= pd.Timestamp('17:59:59'):
+            return 'Afternoon'
+        elif pd.Timestamp('18:00:00') <= start_time <= pd.Timestamp('21:59:59'):
+            return 'Evening'
+        elif pd.Timestamp('21:00:00') <= start_time <= pd.Timestamp('23:59:59') or pd.Timestamp('00:00:00') <= start_time < pd.Timestamp('03:59:59'):
+            return 'Late Night'
+        else:
+            return 'Other'
+
+    df['slot_category'] = pd.to_datetime(df['start_time']).apply(categorize_slot)
+
+
     # Extract only the time part from the 'start_time' and 'end_time' columns
     df['start_time'] = pd.to_datetime(df['start_time']).dt.time
     df['end_time'] = pd.to_datetime(df['end_time']).dt.time
