@@ -52,22 +52,24 @@ def transform_to_dataframe(flattened_data):
     df['day_category'] = df['day_of_week'].apply(lambda x: 'weekend' if x in ['Saturday', 'Sunday'] else 'weekday')
 
 
+
     # Add a column for slot category based on the 'start_time' column
     def categorize_slot(start_time):
-        if pd.Timestamp('04:00:00') <= start_time <= pd.Timestamp('08:59:59'):
+        start_time = pd.to_datetime(start_time).time()  # Convert to datetime.time for comparison
+        if pd.Timestamp('04:00:00').time() <= start_time <= pd.Timestamp('08:59:59').time():
             return 'Early Morning'
-        elif pd.Timestamp('09:00:00') <= start_time <= pd.Timestamp('11:59:59'):
+        elif pd.Timestamp('09:00:00').time() <= start_time <= pd.Timestamp('11:59:59').time():
             return 'Late Morning'
-        elif pd.Timestamp('12:00:00') <= start_time <= pd.Timestamp('17:59:59'):
+        elif pd.Timestamp('12:00:00').time() <= start_time <= pd.Timestamp('17:59:59').time():
             return 'Afternoon'
-        elif pd.Timestamp('18:00:00') <= start_time <= pd.Timestamp('21:59:59'):
+        elif pd.Timestamp('18:00:00').time() <= start_time <= pd.Timestamp('21:59:59').time():
             return 'Evening'
-        elif pd.Timestamp('21:00:00') <= start_time <= pd.Timestamp('23:59:59') or pd.Timestamp('00:00:00') <= start_time < pd.Timestamp('03:59:59'):
+        elif pd.Timestamp('21:00:00').time() <= start_time <= pd.Timestamp('23:59:59').time() or pd.Timestamp('00:00:00').time() <= start_time < pd.Timestamp('03:59:59').time():
             return 'Late Night'
         else:
             return 'Other'
 
-    df['slot_category'] = pd.to_datetime(df['start_time']).apply(categorize_slot)
+    df['slot_category'] = df['start_time'].apply(categorize_slot)
 
 
     # Extract only the time part from the 'start_time' and 'end_time' columns
@@ -136,4 +138,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    process_single_file(r'C:\Project\New folder\Pickleball\data\raw_data\injested_data\960306\2025-01-29\102.json')
