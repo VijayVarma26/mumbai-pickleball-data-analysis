@@ -11,8 +11,8 @@ COURT_DATA_CSV = "../../data/raw_data/courts_data/hudle_court_data.csv"
 
 def get_data_from_api(hudle_venue_id, hudle_court_id, venue_id, court_id):
     # Calculate the date range for the last 2 months
-    end_date = datetime.now()
-    start_date = end_date - timedelta(days=60)
+    end_date = datetime.strptime("2024-12-31", "%Y-%m-%d")
+    start_date = end_date - timedelta(days=90)
 
     current_date = start_date
 
@@ -88,6 +88,12 @@ if __name__ == "__main__":
         print(f"❌ Court data CSV not found at {COURT_DATA_CSV}")
         exit(1)
 
+    court_data = court_data[court_data['is_new_venue'] == False]
+
+    if court_data.empty:
+        print("❌ No court data available after filtering. Exiting.")
+        exit(1)
+    print(court_data.shape)
     # Apply lambda function to court_data to call get_data_from_api
     court_data.apply(
         lambda row: get_data_from_api(
