@@ -2,11 +2,11 @@ import os
 import pandas as pd
 
 def get_csv_files(input_folder):
-    """Recursively collect all CSV files in the folder and its subfolders."""
+    """Recursively collect all CSV files in the folder and its subfolders, ignoring files with 'combined' in the name."""
     csv_files = []
     for root, _, files in os.walk(input_folder):
         for file in files:
-            if file.endswith('.csv'):
+            if file.endswith('.csv') and 'combined' not in file:
                 csv_files.append(os.path.join(root, file))
     return csv_files
 
@@ -41,8 +41,9 @@ def get_all_venue_ids(venue_data_file):
 
 def collate_transformed_data_by_venue_id(venue_id):
     input_folder = r'C:\Project\New folder\Pickleball\data\raw_data\injested_data\\' + str(venue_id)
-    output_file_name = get_output_file_name(input_folder)
-    output_file = os.path.join(input_folder, output_file_name)
+    output_folder = r'C:\Project\New folder\Pickleball\data\transformed_data\slot_data'
+    output_file_name = f"{venue_id}_combined.csv"
+    output_file = os.path.join(output_folder, output_file_name)
 
     csv_files = get_csv_files(input_folder)
     dataframes = read_csv_files(input_folder, csv_files)

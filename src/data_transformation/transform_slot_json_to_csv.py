@@ -45,6 +45,9 @@ def transform_to_dataframe(flattened_data):
     # Add a column for the booked slot count
     df['booked_slot_count'] = df['total_slot_count'] - df['available_slot_count']
 
+    # Add a column for earnings from slot
+    df['earnings'] = df['booked_slot_count'] * df['slot_price']
+    
     # Add a column for the day of the week based on the 'date' column
     df['day_of_week'] = pd.to_datetime(df['date']).dt.strftime('%A')
 
@@ -74,9 +77,8 @@ def transform_to_dataframe(flattened_data):
     df['start_time'] = pd.to_datetime(df['start_time']).dt.time
     df['end_time'] = pd.to_datetime(df['end_time']).dt.time
 
-
     # Rearrange columns in the desired order
-    column_order = ['assigned_venue_id', 'assigned_court_id', 'date', 'day_of_week', 'day_category','start_time','end_time', 'slot_category','slot_price', 'total_slot_count','booked_slot_count', 'available_slot_count']
+    column_order = ['assigned_venue_id', 'assigned_court_id', 'date', 'day_of_week', 'day_category','start_time','end_time', 'slot_category','slot_price', 'total_slot_count','booked_slot_count', 'available_slot_count', 'earnings']
     df = df[column_order]
     
     return df
