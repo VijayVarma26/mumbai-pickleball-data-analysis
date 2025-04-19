@@ -39,10 +39,18 @@ def get_all_venue_ids(venue_data_file):
     df = pd.read_csv(venue_data_file)
     return df['venue_id'].unique().tolist()
 
+def delete_all_files_in_folder(folder_path):
+    """Delete all files in the specified folder."""
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            os.remove(file_path)
+    print(f"All files in {folder_path} have been deleted.")
+    
 def collate_transformed_data_by_venue_id(venue_id):
     input_folder = r'C:\Project\New folder\Pickleball\data\raw_data\injested_data\\' + str(venue_id)
     output_folder = r'C:\Project\New folder\Pickleball\data\transformed_data\slot_data'
-    output_file_name = f"{venue_id}_combined.csv"
+    output_file_name = f"{venue_id}_data.csv"
     output_file = os.path.join(output_folder, output_file_name)
 
     csv_files = get_csv_files(input_folder)
@@ -50,12 +58,25 @@ def collate_transformed_data_by_venue_id(venue_id):
     combined_df = combine_dataframes(dataframes)
     save_combined_dataframe(combined_df, output_file)
 
+def collate_all_venue_slot_data():
+    input_folder = r'C:\Project\New folder\Pickleball\data\transformed_data\slot_data'
+    output_file = os.path.join(input_folder, 'final_slot_data.csv')
+
+    csv_files = get_csv_files(input_folder)
+    dataframes = read_csv_files(input_folder, csv_files)
+    combined_df = combine_dataframes(dataframes)
+    save_combined_dataframe(combined_df, output_file)
+
+
 def main():
     venue_id_list = get_all_venue_ids(r'C:\Project\New folder\Pickleball\data\raw_data\venue_data\hudle_venues_data.csv')
 
     for venue_id in venue_id_list:
         collate_transformed_data_by_venue_id(venue_id)
-    print("Collation of transformed data completed.")
+    print("Created combined.csv files in for each venue.")
+
+    collate_all_venue_slot_data()
+    print("Created final_slot_data.csv file in the slot_data folder.")
     
 if __name__ == "__main__":
     main()
