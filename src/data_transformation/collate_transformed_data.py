@@ -46,7 +46,7 @@ def delete_all_files_in_folder(folder_path):
             file_path = os.path.join(root, file)
             os.remove(file_path)
     print(f"All files in {folder_path} have been deleted.")
-    
+
 def collate_transformed_data_by_venue_id(venue_id):
     input_folder = r'C:\Project\New folder\Pickleball\data\raw_data\injested_data\\' + str(venue_id)
     output_folder = r'C:\Project\New folder\Pickleball\data\transformed_data\slot_data'
@@ -69,6 +69,9 @@ def collate_all_venue_slot_data():
 
 
 def main():
+    # Delete all files in the transformed_data folder before collating new data
+    delete_all_files_in_folder(r'C:\Project\New folder\Pickleball\data\transformed_data\slot_data')
+    
     venue_id_list = get_all_venue_ids(r'C:\Project\New folder\Pickleball\data\raw_data\venue_data\hudle_venues_data.csv')
 
     for venue_id in venue_id_list:
