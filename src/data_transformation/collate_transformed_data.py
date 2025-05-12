@@ -77,7 +77,7 @@ def main():
     for venue_id in venue_id_list:
         collate_transformed_data_by_venue_id(venue_id)
     print("Created combined.csv files in for each venue.")
-
+    
     collate_all_venue_slot_data()
     print("Created final_slot_data.csv file in the slot_data folder.")
     
