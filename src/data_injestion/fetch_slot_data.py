@@ -11,8 +11,8 @@ COURT_DATA_CSV = "../../data/raw_data/courts_data/hudle_court_data.csv"
 
 def get_data_from_api(hudle_venue_id, hudle_court_id, venue_id, court_id):
     # Calculate the date range for the last 2 months
-    end_date = datetime.strptime("2024-11-30", "%Y-%m-%d")
-    start_date = end_date - timedelta(days=30)
+    end_date = datetime.strptime("2024-01-30", "%Y-%m-%d")
+    start_date = end_date - timedelta(days=31)
 
     current_date = start_date
 
