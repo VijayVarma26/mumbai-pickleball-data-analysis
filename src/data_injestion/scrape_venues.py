@@ -49,7 +49,7 @@ def scrape_venues(driver, url=VENUES_URL):
 
             venue_data = {
                 "title": title,
-                "location": location,
+                "city": location,
                 "price": price,
                 "venue_link": venue_link,
                 "image_url": image_url,
@@ -80,9 +80,9 @@ def deduplicate_and_save(data, output_dir=OUTPUT_DIR, master_csv=MASTER_CSV):
         transformed_data.append({
             "venue_id": item.get("venue_id", ""),
             "venue_name": item.get("title", ""),
-            "city": "Mumbai",
+            "city": item.get("location", ""),
             "venue_link": item.get("venue_link", ""),
-            "address": item.get("location", ""),
+            "address": "",
             "lattitude": "",
             "longitude": "",
             "is_new": True,
