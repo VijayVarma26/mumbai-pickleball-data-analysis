@@ -84,7 +84,7 @@ def main():
     print(f"[INFO] Found {len(missing_indices)} venues with missing addresses")
 
     # Step 3: Initialize Selenium
-    driver = initialize_selenium_driver()
+    driver = initialize_driver()
 
     try:
         # Step 4: Update missing addresses
