@@ -3,13 +3,21 @@ import pandas as pd
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from includes.common_functions import initialize_selenium_driver
+
 
 # --- Configuration ---
+CHROMEDRIVER_PATH = r'C:/Project/New folder/Pickleball/static/chromedriver.exe'
 MASTER_CSV_PATH = r"C:\Project\New folder\Pickleball\data\raw_data\venue_data\hudle_venues_data.csv"
 ADDRESS_XPATH = "//div[@class ='txt--blue-70 d-flex']/p"
 
 # --- Functions ---
+
+def initialize_driver(driver_path=CHROMEDRIVER_PATH):
+    service = Service(executable_path=driver_path)
+    driver = Chrome(service=service)
+    driver.maximize_window()
+    driver.implicitly_wait(10)
+    return driver
 
 def load_master_data(filepath: str) -> pd.DataFrame:
     """Load master CSV into a DataFrame"""
