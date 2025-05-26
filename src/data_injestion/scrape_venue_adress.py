@@ -1,44 +1,93 @@
+import os
+import pandas as pd
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from includes.common_functions import initialize_selenium_driver
-import json
-import os
+
+# --- Configuration ---
+MASTER_CSV_PATH = r"C:\Project\New folder\Pickleball\data\raw_data\venue_data\hudle_venues_data.csv"
+ADDRESS_XPATH = "//div[@class ='txt--blue-70 d-flex']/p"
+
+# --- Functions ---
+
+def load_master_data(filepath: str) -> pd.DataFrame:
+    """Load master CSV into a DataFrame"""
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"[ERROR] File not found: {filepath}")
+
+    df = pd.read_csv(filepath, dtype=str)
+    df.fillna("", inplace=True)
+    print(f"[INFO] Loaded {len(df)} rows from master CSV")
+    return df
 
 
-driver = initialize_selenium_driver()
-data_file_path = r"C:\Project\New folder\Pickleball\data-scraping\scraped_data\hudle_venues_data_22-03-2025.json"
-# data_file_path = "./data-scraping/scraped_data/hudle_venues_data_22-03-2025.json"
+def get_missing_address_indices(df: pd.DataFrame) -> pd.Index:
+    """Return indices where address is missing or empty"""
+    return df[df['address'].str.strip() == ""].index
 
 
-if not os.path.exists(data_file_path):
-    print(f"JSON file not found at {data_file_path}. Please check the file path.")
-    driver.quit()
-    exit()
-
-# Load venues data
-with open(data_file_path, 'r') as f:
-    venues = json.load(f)
-
-for venue in venues:
+def fetch_address_from_venue(driver, venue_url: str) -> str:
+    """Use Selenium to extract address from a venue URL"""
     try:
-        driver.get(venue["venue_link"])
+        driver.get(venue_url)
         address_element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//div[@class ='txt--blue-70 d-flex']/p"))
+            EC.presence_of_element_located((By.XPATH, ADDRESS_XPATH))
         )
-        address = address_element.text
-        venue["address"] = address
-
+        return address_element.text.strip()
     except Exception as e:
-        print(f"Error fetching address for {venue['Title']}: {e}")
-        venue["Address"] = "N/A" 
+        print(f"[WARN] Failed to fetch address from {venue_url}: {e}")
+        return "N/A"
 
-try:
-    with open(data_file_path, 'w') as fp:
-        json.dump(venues, fp, indent=4)
-    print(f"Output written to: {data_file_path}")
 
-except Exception as e:
-    print(f"Error writing output to JSON: {e}")
+def update_addresses(df: pd.DataFrame, indices: pd.Index, driver) -> pd.DataFrame:
+    """Update the DataFrame with scraped addresses for missing entries"""
+    for idx in indices:
+        venue_link = df.at[idx, "venue_link"]
+        venue_name = df.at[idx, "venue_name"]
+        print(f"[INFO] Scraping address for: {venue_name} | URL: {venue_link}")
 
-driver.quit()
+        address = fetch_address_from_venue(driver, venue_link)
+        df.at[idx, "address"] = address
+        print(f"[{idx}] Updated address: {address}")
+
+    return df
+
+
+def save_updated_data(df: pd.DataFrame, filepath: str):
+    """Save DataFrame back to CSV"""
+    try:
+        df.to_csv(filepath, index=False)
+        print(f"[INFO] Master CSV successfully updated at: {filepath}")
+    except Exception as e:
+        print(f"[ERROR] Failed to save CSV: {e}")
+
+
+def main():
+    # Step 1: Load data
+    df = load_master_data(MASTER_CSV_PATH)
+
+    # Step 2: Find missing addresses
+    missing_indices = get_missing_address_indices(df)
+    if not missing_indices.any():
+        print("[INFO] No missing addresses to update.")
+        return
+
+    print(f"[INFO] Found {len(missing_indices)} venues with missing addresses")
+
+    # Step 3: Initialize Selenium
+    driver = initialize_selenium_driver()
+
+    try:
+        # Step 4: Update missing addresses
+        df = update_addresses(df, missing_indices, driver)
+
+        # Step 5: Save updated CSV
+        save_updated_data(df, MASTER_CSV_PATH)
+
+    finally:
+        driver.quit()
+
+
+if __name__ == "__main__":
+    main()
