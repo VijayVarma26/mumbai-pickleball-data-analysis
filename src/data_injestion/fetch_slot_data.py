@@ -84,6 +84,11 @@ if __name__ == "__main__":
     # Read court data from CSV
     try:
         court_data = pd.read_csv(COURT_DATA_CSV)
+        venue_ids = [
+            673090, 590965, 979503, 496378, 947046, 850573, 899952, 339334,
+            334831, 470579, 352809, 571721, 879949, 290377, 335217
+        ]
+        court_data = court_data[court_data['venue_id'].isin(venue_ids)]
     except FileNotFoundError:
         print(f"❌ Court data CSV not found at {COURT_DATA_CSV}")
         exit(1)
