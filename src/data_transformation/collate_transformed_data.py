@@ -11,16 +11,25 @@ def get_csv_files(input_folder):
     return csv_files
 
 def read_csv_files(input_folder, csv_files):
-    """Read each CSV file and return a list of dataframes."""
+    """Read each CSV file and return a list of dataframes, skipping empty files."""
     dataframes = []
     for csv_file in csv_files:
         file_path = os.path.join(input_folder, csv_file)
-        df = pd.read_csv(file_path)
-        dataframes.append(df)
+        try:
+            df = pd.read_csv(file_path)
+            if not df.empty:
+                dataframes.append(df)
+            else:
+                print(f"Skipped empty CSV: {file_path}")
+        except pd.errors.EmptyDataError:
+            print(f"Skipped empty or invalid CSV: {file_path}")
     return dataframes
 
 def combine_dataframes(dataframes):
     """Concatenate all dataframes into a single dataframe."""
+    if not dataframes:
+        print("No DataFrames to concatenate. Skipping this venue.")
+        return pd.DataFrame()  # Return empty DataFrame
     return pd.concat(dataframes, ignore_index=True)
 
 def save_combined_dataframe(combined_df, output_file):
